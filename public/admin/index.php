@@ -28,7 +28,22 @@
 
                 if(isset($_GET['orders'])){
                     include(TEMPLATE_BACK . "/orders.php");
+                }
 
+                   if(isset($_GET['categories'])){
+                    include(TEMPLATE_BACK . "/categories.php");
+                }
+
+                   if(isset($_GET['add_product'])){
+                    include(TEMPLATE_BACK . "/add_product.php");
+                }
+
+                   if(isset($_GET['edit_product'])){
+                    include(TEMPLATE_BACK . "/edit_product.php");
+                }
+
+                   if(isset($_GET['products'])){
+                    include(TEMPLATE_BACK . "/products.php");
                 }
                 ?>
                  <!-- FIRST ROW WITH PANELS -->
