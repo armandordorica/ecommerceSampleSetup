@@ -1,5 +1,3 @@
-<?php require_once("../../resources/config.php"); ?> 
-<?php include(TEMPLATE_BACK . "/header.php"); ?>
 
         <div class="col-md-12">
 <div class="row">
@@ -39,7 +37,3 @@
     </tbody>
 </table>
 </div>
-
-
-
-        <?php include(TEMPLATE_BACK . "/footer.php"); ?>
