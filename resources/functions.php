@@ -259,5 +259,37 @@ echo $orders;
 } 
 
 
+/************* ADMIN PRODUCTS ************/
+function get_products_in_admin(){
+
+$query = query(" SELECT * FROM products");
+//the query functions gets the connection and sends it in
+//we can use a confirm function to make sure that this is actually working
+confirm($query); 
+
+while($row = fetch_array($query)) {
+
+$product = <<<DELIMETER
+<tr>
+    <td>{$row['product_id']}</td>
+    <td>{$row['product_title']}<br>
+      <img src="{$row['product_image']}" alt="" width="200" height="250">>
+    </td>
+    <td>Category</td>
+    <td>{$row['product_price']}</td>
+    <td>{$row['product_quantity']}</td>
+</tr>
+DELIMETER;
+
+echo $product; 
+}
+
+
+
+}
+
+
+
+
 
 ?>
