@@ -133,4 +133,59 @@ return $paypal_button;
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function report(){ 
+    $total = 0; 
+    $item_quantity = 0; 
+
+foreach($_SESSION as $name => $value){ 
+
+    if($value > 0 ) {
+
+    if(substr($name, 0, 8 ) == "product_"){
+        //now we can subtract the id from the session 
+        $length = strlen($name - 8);
+        $id = substr($name, 8, $length); 
+
+$query = query("SELECT * FROM products WHERE product_id = " . escape_string($id) . " ");
+confirm($query);
+
+while($row = fetch_array($query)) { 
+$product_price = $row['product_price'];
+$product_quantity = $row['product_quantity'];
+$sub = $row['product_price']*$value; 
+$item_quantity+=$value;
+
+
+
+$insert_report = query("INSERT INTO reports (product_id, product_price, product_quantity) 
+    VALUES ('{$id}', '{$product_price}', '{$value}')");
+confirm($insert_report);
+
+}
+echo $item_quantity;
+
+    } 
+
+    }
+
+    
+}
+
+
+
+}
 ?>

@@ -53,7 +53,6 @@ redirect("../../public");
                 }
                 ?>
                  <!-- FIRST ROW WITH PANELS -->
-                <?php echo $_SERVER['REQUEST_URI']; ?> 
 
 
             </div>
