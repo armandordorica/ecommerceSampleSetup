@@ -147,7 +147,7 @@ return $paypal_button;
 
 
 
-function report(){ 
+function process_transaction(){ 
     if(isset($_GET['tx'])){
      $amount = $_GET['amt'];
    $currency = $_GET['cc'];

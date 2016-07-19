@@ -3,14 +3,7 @@
 <!-- Header-->
 <?php include(TEMPLATE_FRONT .  "/header.php");?>
 
-<?php 
-
-
-
-report();
-
-
-?> 
+<?php process_transaction(); ?> 
 
 
 

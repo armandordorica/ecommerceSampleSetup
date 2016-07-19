@@ -5,12 +5,13 @@
    All Orders
 
 </h1>
+
+<h4 class= "bg-success"><?php display_message(); ?></h4> 
 </div>
 
 <div class="row">
 <table class="table table-hover">
     <thead>
-
       <tr>
            <th>ID</th>
            <th>Amount</th>
