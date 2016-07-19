@@ -148,6 +148,19 @@ return $paypal_button;
 
 
 function report(){ 
+    if(isset($_GET['tx'])){
+     $amount = $_GET['amt'];
+   $currency = $_GET['cc'];
+$transaction = $_GET['tx'];
+     $status = $_GET['st'];
+
+
+$send_order = query("INSERT INTO Orders (order_amount, order_currency, order_transaction, order_status) 
+    VALUES ('{$amount}', '{$currency}', '{$transaction}', '{$status}')");
+//this function gives the last inserted id and you need to pass a global connection variable
+$last_id = last_id(); 
+
+confirm($send_order);
     $total = 0; 
     $item_quantity = 0; 
 
@@ -171,8 +184,8 @@ $item_quantity+=$value;
 
 
 
-$insert_report = query("INSERT INTO reports (product_id, product_price, product_quantity) 
-    VALUES ('{$id}', '{$product_price}', '{$value}')");
+$insert_report = query("INSERT INTO reports (product_id, order_id, product_price, product_quantity) 
+    VALUES ('{$id}', '{$last_id}','{$product_price}', '{$value}')");
 confirm($insert_report);
 
 }
@@ -181,8 +194,11 @@ echo $item_quantity;
     } 
 
     }
+}
+//session_destroy();
+}else {
 
-    
+    redirect("index.php");
 }
 
 
