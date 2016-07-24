@@ -306,7 +306,7 @@ $product_quantity      = escape_string($_POST['product_quantity']);
 $product_image         = escape_string($_FILES['file']['name']);
 $image_temp_location   = escape_string($_FILES['file']['tmp_name']);
 
-
+move_uploaded_file($image_temp_location , UPLOAD_DIRECTORY . DS . $product_image);
 
 
 
