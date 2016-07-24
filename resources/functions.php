@@ -308,8 +308,13 @@ $image_temp_location   = escape_string($_FILES['file']['tmp_name']);
 
 move_uploaded_file($image_temp_location , UPLOAD_DIRECTORY . DS . $product_image);
 
-
-
+$query = query("INSERT INTO products(product_title, product_category_id, 
+    product_price, product_description, short_desc, product_quantity, product_image) VALUES('{$product_title}', '{$product_category_id}', 
+    '{$product_price}', '{$product_description}', '{$short_desc}', '{$product_quantity}', '{$product_image}')");
+$last_id = last_id();
+confirm($query);
+set_message("New product with id {$last_id} was added");
+redirect("index.php?products");
 }
 
 
