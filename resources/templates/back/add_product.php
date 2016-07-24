@@ -6,7 +6,7 @@
 <div class="row">
 <h1 class="page-header">
    Add Product
-
+<?php add_product(); ?>
 </h1>
 </div>
                

@@ -291,6 +291,33 @@ echo $product;
 }
 
 
+/****************** ADDING PRODUCTS IN ADMIN ************/
+
+function add_product(){
+if(isset($_POST['publish'])){
+
+    echo "IT WORKS"; 
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
