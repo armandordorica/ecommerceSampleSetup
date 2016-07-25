@@ -27,7 +27,11 @@ while($row = fetch_array($query)):
             <div class="row">
 
                 <div class="col-md-7">
+<<<<<<< HEAD
                    <img class="img-responsive" src="../resources/<?php echo display_image($row['product_image']);?>" alt="">
+=======
+                   <img class="img-responsive" src="<?php echo $row['product_image'];?>" alt="">
+>>>>>>> 65d0ea4b8663a0e29e545160559dc60297e6eaf4
 
                 </div>
 
