@@ -3,29 +3,7 @@
 <!-- Header-->
 <?php include(TEMPLATE_FRONT .  "/header.php");?>
 
-<?php 
-
-if(isset($_GET['tx'])){
-     $amount = $_GET['amt'];
-   $currency = $_GET['cc'];
-$transaction = $_GET['tx'];
-     $status = $_GET['st'];
-
-
-$query = query("INSERT INTO Orders (order_amount, order_currency, order_transaction, order_status) 
-	VALUES ('{$amount}', '{$currency}', '{$transaction}', '{$status}')");
-confirm($query);
-
-report();
-
-
-// session_destroy();
-
-} else {
-
-    redirect("index.php");
-}
-?> 
+<?php process_transaction(); ?> 
 
 
 

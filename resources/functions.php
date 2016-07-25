@@ -1,6 +1,14 @@
 <?php
 
+$upload_directory = "uploads"; 
+
 //helper functions
+function last_id(){
+
+    global $connection; 
+   return mysqli_insert_id($connection);
+}
+
 function set_message($msg){
     if(!empty($msg)){ 
         $_SESSION['message'] = $msg;
@@ -68,11 +76,12 @@ $query = query(" SELECT * FROM products");
 confirm($query); 
 
 while($row = fetch_array($query)) {
+$product_image = display_image($row['product_image']);
 
 $product = <<<DELIMETER
 <div class="col-sm-4 col-lg-4 col-md-4">
     <div class="thumbnail">
-<a href="item.php?id={$row['product_id']}"><img src="{$row['product_image']}" alt=""></a>
+<a href="item.php?id={$row['product_id']}"><img src="../resources/{$product_image}" alt=""></a>
         <div class="caption">
             <h4 class="pull-right">&#36;{$row['product_price']}</h4>
             <h4><a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
@@ -229,4 +238,146 @@ function send_message(){
 
 
 /************* BACK END FUNCTIONS ***************/
+function display_orders(){
+$query = query(" SELECT * FROM Orders");
+confirm($query); 
+
+while($row = fetch_array($query)) {
+
+$orders = <<<DELIMETER
+<tr>
+    <td>{$row['order_id']}</td>
+    <td>{$row['order_amount']}</td>
+    <td>{$row['order_transaction']}</td>
+    <td>{$row['order_currency']}</td>
+    <td>{$row['order_status']}</td>
+    <td><a class="btn btn-danger" href="../../resources/templates/back/delete_order.php?id={$row['order_id']}"><span class="glyphicon glyphicon-remove"></span></a></td>
+</tr> 
+DELIMETER;
+echo $orders; 
+
+
+}
+
+} 
+
+
+/************* ADMIN PRODUCTS ************/
+function display_image($picture){
+
+    global $upload_directory;
+    //take in the image. 
+    /*We concatenate the uploads directory with the input picture*/
+return $upload_directory . DS . $picture;
+}
+
+
+function get_products_in_admin(){
+
+$query = query(" SELECT * FROM products");
+//the query functions gets the connection and sends it in
+//we can use a confirm function to make sure that this is actually working
+confirm($query); 
+
+while($row = fetch_array($query)) {
+$category = show_product_category_title($row['product_category_id']);
+$product_image = display_image($row['product_image']);
+
+$product = <<<DELIMETER
+<tr>
+    <td>{$row['product_id']}</td>
+    <td>{$row['product_title']}<br>
+      <a href="index.php?edit_product&id={$row['product_id']}""><img src="../../resources/{$product_image}" alt="" width="100" height="120   "></a>
+    </td>
+    <td>{$category}</td>
+    <td>{$row['product_price']}</td>
+    <td>{$row['product_quantity']}</td>
+    <td><a class="btn btn-danger" href="../../resources/templates/back/delete_product.php?id={$row['product_id']}">
+            <span class="glyphicon glyphicon-remove"></span></a></td>
+</tr>
+DELIMETER;
+
+echo $product; 
+}
+
+}
+
+
+
+
+function show_product_category_title($product_category_id){
+$category_query = query("SELECT * FROM categories WHERE cat_id = '{$product_category_id}'");
+confirm($category_query);
+
+while($category_row = fetch_array($category_query)){
+    return $category_row['cat_title'];
+}
+}
+
+/****************** ADDING PRODUCTS IN ADMIN ************/
+
+function add_product(){
+if(isset($_POST['publish'])){
+
+
+$product_title         = escape_string($_POST['product_title']);
+$product_category_id   = escape_string($_POST['product_category_id']);
+$product_price         = escape_string($_POST['product_price']);
+$product_description   = escape_string($_POST['product_description']);
+$short_desc            = escape_string($_POST['short_desc']);
+$product_quantity      = escape_string($_POST['product_quantity']);
+$product_image         = escape_string($_FILES['file']['name']);
+$image_temp_location   = escape_string($_FILES['file']['tmp_name']);
+
+move_uploaded_file($image_temp_location , UPLOAD_DIRECTORY . DS . $product_image);
+
+$query = query("INSERT INTO products(product_title, product_category_id, 
+    product_price, product_description, short_desc, product_quantity, product_image) VALUES('{$product_title}', '{$product_category_id}', 
+    '{$product_price}', '{$product_description}', '{$short_desc}', '{$product_quantity}', '{$product_image}')");
+$last_id = last_id();
+confirm($query);
+set_message("New product with id {$last_id} was added");
+redirect("index.php?products");
+}
+
+
+}
+
+
+function show_categories_add_product_page(){ 
+
+$query = query("SELECT * FROM categories");
+confirm($query);
+ 
+while($row = fetch_array($query)) { 
+$categories_options = <<<DELIMETER
+<option value="{$row['cat_id']}">{$row['cat_title']}</option>
+DELIMETER;
+
+echo $categories_options;
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
