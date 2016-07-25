@@ -268,14 +268,14 @@ $query = query(" SELECT * FROM products");
 confirm($query); 
 
 while($row = fetch_array($query)) {
-
+$category = show_product_category_title($row['product_category_id']);
 $product = <<<DELIMETER
 <tr>
     <td>{$row['product_id']}</td>
     <td>{$row['product_title']}<br>
       <a href="index.php?edit_product&id={$row['product_id']}""><img src="{$row['product_image']}" alt="" width="200" height="250"></a>
     </td>
-    <td>Category</td>
+    <td>{$category}</td>
     <td>{$row['product_price']}</td>
     <td>{$row['product_quantity']}</td>
     <td><a class="btn btn-danger" href="../../resources/templates/back/delete_product.php?id={$row['product_id']}">
@@ -286,10 +286,19 @@ DELIMETER;
 echo $product; 
 }
 
-
-
 }
 
+
+
+
+function show_product_category_title($product_category_id){
+$category_query = query("SELECT * FROM categories WHERE cat_id = '{$product_category_id}'");
+confirm($category_query);
+
+while($category_row = fetch_array($category_query)){
+    return $category_row['cat_title'];
+}
+}
 
 /****************** ADDING PRODUCTS IN ADMIN ************/
 

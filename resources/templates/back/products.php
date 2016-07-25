@@ -1,4 +1,4 @@
-add_product();
+
 
 
 <h1 class="page-header">
